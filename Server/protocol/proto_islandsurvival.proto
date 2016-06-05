@@ -1,0 +1,202 @@
+message CSLogin
+{
+	required string id			= 1;
+	required string passwd		= 2;
+}
+
+message SCLogin
+{
+	required int32 result		= 1;//0代表用户名或密码错误, 1代表数据库错误，2代表成功, 3代表该账户已经登录
+}
+
+message CSRegist
+{
+	required string id			= 1;
+	required string passwd		= 2;
+}
+
+message SCRegist
+{
+	required int32 result		= 1;
+}
+
+message PBRoomInfo
+{
+	required int32	id 			= 1; // 房间号
+	required int32	have 		= 2; // 已有人数
+	required int32	limit		= 3; // 总人数限制
+	required int32	game_mode	= 4; // 游戏模式
+	required int32	team_mode	= 5; // 组队模式
+}
+
+message PBDetailRoomInfo
+{
+	repeated string	players		= 1; // 房间内的玩家
+	repeated int32	team_id		= 2; // 玩家对应队伍id
+	repeated int32	player_id	= 3; // 每个玩家的player_id
+	required int32	game_option	= 4; //	游戏选项
+}
+
+message CSChangeTeam
+{
+	optional int32 team_id		= 1; // 修改成哪个teamid
+	optional int32 game_option	= 2; // 修改游戏选项
+}
+
+// 拉取所有房间信息
+message CSPullAllRoomInfo
+{
+	
+}
+
+// 返回房间信息结果
+message SCPullAllRoomInfo
+{
+	repeated PBRoomInfo	rooms	= 1; 
+}
+
+// 请求创建房间
+message CSCreateRoom
+{
+	required int32	game_mode	= 1; // 游戏模式
+	required int32	team_mode	= 2; // 组队模式, 1对应混战模式, 2对应选择模式,默认1队
+}
+
+message SCCreateRoom
+{
+	required bool 	result		= 1; // 是否成功
+	required int32 	room_id		= 2; // 服务器分配的房间号
+}
+
+// 请求加入房间
+message CSJoinRoom
+{
+	required int32	room_id		= 1; // 房间号
+}
+
+message SCJoinRoom
+{
+	required int32	result		= 1; // 0代表该房间不存在, 1代表游戏已经开始，2代表人物满了，3代表成功加入，服务器会再发一个SCPullOneRoomDetail过来
+}
+
+message CSPlayerExitRoom
+{
+	
+}
+
+message SCPlayerExitRoom
+{
+	required int32 result		= 1;	
+}
+
+message SCPullOneRoomDetail
+{
+	required PBDetailRoomInfo room_info		= 1; // 详细房间信息
+}
+
+// 房主开始游戏
+message CSReadyToStart
+{
+	
+}
+
+message SCGameLoading
+{
+	required int32 rand			= 1; 
+}
+
+message CSLoadSucceed
+{
+	
+}
+
+message SCGameStart
+{
+	
+}
+
+message SCPlayerExitGame
+{
+	required int32 player		= 1;
+}
+
+message CSChoseRole
+{
+	required int32 role_id		= 1;
+}
+
+message SCChoseRole
+{
+	required int32 role_id		= 1;
+	required int32 player_id	= 2;
+}
+
+message SCFrameMess
+{	
+	required int32 operation	= 1;
+}
+
+message CSMove
+{
+	required int32 dir			= 1;
+}
+
+message SCMove
+{
+	required int32	dir			= 1;
+	required int32	player_id	= 2;
+}
+
+message CSKill
+{
+    required int32 killer       = 1; // 杀人者
+    required int32 bekilled     = 2; // 被杀者
+}
+
+message SCKill
+{
+    required int32 killer       = 1; // 杀人者
+    required int32 bekilled     = 2; // 被杀者
+}
+
+message CSGamePause
+{
+	
+}
+
+message SCGamePause
+{
+	
+}
+
+message CSSkill
+{
+	required int32 skill_id		= 1; //技能ID
+	required float pos_x		= 2; //释放位置x
+	required float pos_z		= 3; //释放位置z
+	required int32 target_id	= 4; //目标玩家ID
+}
+
+message SCSkill
+{
+	required int32 skill_id		= 1; //技能ID
+	required float pos_x		= 2; //释放位置x
+	required float pos_z		= 3; //释放位置z
+	required int32 target_id	= 4; //目标玩家ID
+	required int32 attacker_id	= 5; //释放玩家ID
+}
+
+message CSHeartbeat
+{
+	
+}
+
+message CSGameEnd
+{
+	
+}
+
+message SCGameEnd
+{
+	
+}
